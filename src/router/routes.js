@@ -1,3 +1,4 @@
+import AdicionarContato from '../views/AdicionarContato.vue';
 import ControleDeContatos from '../views/ControleDeContatos.vue';
 import Login from '../views/Login.vue';
 import MenuContatos from '../views/MenuContatos.vue';
@@ -12,7 +13,7 @@ const routes = [
         }
     },
     {
-        path: '/', 
+        path: '/contatos', 
         name: 'ControleDeContatos',
         component: ControleDeContatos,
         title: 'Contatos',
@@ -24,11 +25,21 @@ const routes = [
         path: '/menu', 
         name: 'MenuContatos',
         component: MenuContatos,
-        title: 'Menu',
+        title: 'menu',
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        path: '/contatos/novo', 
+        name: 'NovoContatos',
+        component: AdicionarContato,
+        title: 'Adicionar Contato',
         meta: {
             requireAuth: false
         }
     },
+    
 ];
 
   export default routes;

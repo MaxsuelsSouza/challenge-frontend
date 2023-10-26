@@ -33,10 +33,10 @@ export default {
 .box-login {
   width: 300px;
   margin: auto;
-  border: 1px groove #192a3f;
+  border: 1px groove #2196f3;
   border-radius: 15px;
-  background: #18273a;
-  box-shadow: 26px 26px 0px #142030, -26px -26px 0px #1c2e44;
+  background: var(--cor-primaria);
+  box-shadow: 26px 26px 0px #1976d2, -26px -26px 0px #1979c7;
   margin-top: 100px;
   padding: 22px;
 }
