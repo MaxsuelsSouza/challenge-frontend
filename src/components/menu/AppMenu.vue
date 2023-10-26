@@ -1,10 +1,10 @@
 <template>
   <ul>
     <li>
-      <a @click="() => this.$router.push({ path: '/' })">Contatos</a>
+      <a @click="() => this.$router.push({ path: '/contatos' })">Contatos</a>
     </li>
     <li>
-      <a @click="() => this.$router.push({ path: '/menu ' })">Menu</a>
+      <a @click="() => this.$router.push({ path: '/menu' })">Menu</a>
     </li>
     <li>
       <a @click="() => this.$router.push({ path: '/Login' })">Sair</a>
@@ -12,11 +12,9 @@
   </ul>
 </template>
 <script>
-export default {};
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;1,300;1,500&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&family=Noto+Serif:ital,wght@0,300;0,500;1,300;1,400&display=swap");
 ul {
   list-style-type: none;
   margin: 0;

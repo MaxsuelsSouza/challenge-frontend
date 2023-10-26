@@ -15,4 +15,5 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&family=Noto+Serif:ital,wght@0,300;0,500;1,300;1,400&display=swap");
 </style>
