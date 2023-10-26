@@ -13,11 +13,7 @@ export default {
 <style scoped>
 button {
   width: 100%;
-<<<<<<< HEAD
-  background-color: #223d5c;
-=======
   background-color: var(--cor-terceira);
->>>>>>> d109e23771f83b6c94822716aa2287efc443cb86
   color: white;
   padding: 8px 20px;
   margin: 8px 0;
