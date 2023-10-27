@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h1 class="titulos">Contatos</h1>
+        <h1 class="titulos" @click="abrirContato">Contatos</h1>
         <h1 class="titulo" @click="adicionarContato">+</h1>
       </div>
     </div>
@@ -11,11 +11,23 @@
       <div class="col-sm-12">
         <BtnInput placeHolder="Buscar"></BtnInput>
         <table class="table table-hover">
-          <tr></tr>
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Numero</th>
+            <th>Email</th>
+          </tr>
           <tbody>
-            <tr v-for="pessoa in contatos" :key="pessoa.id">
+            <!-- aqui tricar por editar contato -->
+            <tr
+              @click="editarContato(pessoa)"
+              v-for="pessoa in contatos"
+              :key="pessoa.id"
+            >
+              <td>{{ pessoa.id }}</td>
               <td>{{ pessoa.nome }}</td>
-              <td></td>
+              <td>{{ pessoa.numero }}</td>
+              <td>{{ pessoa.email }}</td>
             </tr>
           </tbody>
         </table>
@@ -43,6 +55,28 @@ export default {
   methods: {
     adicionarContato() {
       this.$router.push({ name: "NovoContatos" });
+    },
+    editarContato(pessoa) {
+      // aqui poder fazer uma validaçao se quer excluir ou editar
+      this.$router.push({ name: "editarContatos", params: { id: pessoa.id } });
+    },
+    excluirContato(contato) {
+      if (
+        confirm(`Deseja excluir o produto "${contato.id} - ${contato.nome}"`)
+      ) {
+        ContatosService.deletar(contato.id)
+          .then(() => {
+            let indice = this.contatos.findIndex((c) => c.id == contato.id);
+
+            this.contatos.splice(indice, 1);
+            setTimeout(() => {
+              alert("contato excluido com sucesso");
+            }, 500);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
 
     obterTodosOsContatos() {

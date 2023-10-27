@@ -1,3 +1,4 @@
+
 import AdicionarContato from '../views/AdicionarContato.vue';
 import ControleDeContatos from '../views/ControleDeContatos.vue';
 import Login from '../views/Login.vue';
@@ -13,7 +14,7 @@ const routes = [
         }
     },
     {
-        path: '/contatos', 
+        path: '/', 
         name: 'ControleDeContatos',
         component: ControleDeContatos,
         title: 'Contatos',
@@ -36,7 +37,16 @@ const routes = [
         component: AdicionarContato,
         title: 'Adicionar Contato',
         meta: {
-            requireAuth: false
+            requireAuth: true
+        }
+    },
+    {
+        path: '/contatos/editar/:id', 
+        name: 'editarContatos',
+        component: AdicionarContato,
+        title: 'Editar Contato',
+        meta: {
+            requireAuth: true
         }
     },
     

@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li>
-      <a @click="() => this.$router.push({ path: '/contatos' })">Contatos</a>
+      <a @click="() => this.$router.push({ path: '/' })">Contatos</a>
     </li>
     <li>
       <a @click="() => this.$router.push({ path: '/menu' })">Menu</a>

@@ -2,28 +2,31 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h1 class="titulos">Adicionar Contatos</h1>
+        <h1 class="titulos">
+          {{ modoCadastro ? "Adicionar" : "Editar" }} contatos
+        </h1>
         <hr />
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-2">
         <div class="form-group">
-          <label for="nome">Nome</label>
+          <label for="id">Id</label>
           <input
             id="nome"
-            v-model="contatoC.nome"
+            v-model="contatos.id"
             type="text"
+            disabled
             class="form-control"
           />
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-10">
         <div class="form-group">
-          <label for="sobreNome">SobreNome</label>
+          <label for="nome">Nome</label>
           <input
-            id="SobreNome"
-            v-model="contatoC.sobreNome"
+            id="nome"
+            v-model="contatos.nome"
             type="text"
             class="form-control"
           />
@@ -31,10 +34,10 @@
       </div>
       <div class="col-sm-3">
         <div class="form-group">
-          <label for="numero">Numero</label>
+          <label for="numero">Telefone</label>
           <input
             id="numero"
-            v-model="contatoC.numero"
+            v-model="contatos.numero"
             type="text"
             class="form-control"
           />
@@ -45,18 +48,7 @@
           <label for="email">Email</label>
           <input
             id="email"
-            v-model="contatoC.email"
-            type="text"
-            class="form-control"
-          />
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="form-group">
-          <label for="cpf">Cpf</label>
-          <input
-            id="cpf"
-            v-model="contatoC.cpf"
+            v-model="contatos.email"
             type="text"
             class="form-control"
           />
@@ -64,35 +56,12 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <label for="endereco">Endereço</label>
-          <input
-            id="endereco"
-            v-model="contatoC.endereco"
-            type="text"
-            class="form-control"
-          />
-        </div>
-      </div>
-      <div class="col-sm-5">
-        <div class="form-group">
-          <label for="redeSocial">Rede Social</label>
-          <input
-            id="redeSocial"
-            v-model="contatoC.redeSocial"
-            type="text"
-            class="form-control"
-          />
-        </div>
-      </div>
-      <div class="col-sm-12">
-        <div class="form-group">
           <label for="nota">Nota</label>
           <textarea
             id="nota"
-            v-model="contatoC.nota"
+            v-model="contatos.nota"
             type="text"
             class="form-control"
-            row="4"
           ></textarea>
         </div>
       </div>
@@ -113,20 +82,98 @@
   </div>
 </template>
 <script>
-import ContatosCompleto from "../models/ContatosCompleto";
+import Contatos from "../models/Contatos";
+import produtoService from "../service/contatos-services";
 export default {
   name: "Contato",
   data() {
     return {
-      contatoC: new ContatosCompleto(),
+      contatos: new Contatos(),
+      modoCadastro: true,
     };
   },
+  mounted() {
+    let id = this.$route.params.id;
+    if (!id) return;
+
+    this.modoCadastro = false;
+    this.obterContatoPorId(id);
+  },
   methods: {
+    obterContatoPorId(id) {
+      produtoService
+        .obterPorId(id)
+        .then((response) => {
+          this.contatos = new Contatos(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$swal({
+            icon: "error",
+            title: "Nao foi possivel obter o contato pelo " + id,
+          });
+        });
+    },
     cancelarAcao() {
-      this.contatoC = new ContatosCompleto();
+      this.Contatos = new Contatos();
       this.$router.push({ name: "ControleDeContatos" });
     },
-    salvarContato() {},
+    cadastrarContato() {
+      if (!this.contatos.modeloValidoParaCadastro()) {
+        this.$swal({
+          icon: "warning",
+          title: "Nome e numero é obrigatorio para cadastro!",
+          animate: true,
+        });
+        return;
+      }
+      produtoService
+        .cadastrar(this.contatos)
+        .then(() => {
+          this.$swal({
+            icon: "success",
+            title: "Contato cadastrado com sucesso!",
+          });
+          this.contatos = new Contatos();
+          this.$router.push({ name: "ControleDeContatos" });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$swal({
+            icon: "error",
+            title: "Nao foi possivel cadastrar o contato.",
+          });
+        });
+    },
+    atualizaContato() {
+      if (!this.contatos.modeloValidoParaAtualizar()) {
+        this.$swal({
+          icon: "warning",
+          title: "Codigo e nome e obrigatorio para atualizaçao",
+        });
+        // alert("codigo e nome e obrigatorio para atualizaçao");
+        return;
+      }
+      produtoService
+        .atualizar(this.contatos)
+        .then(() => {
+          this.$swal({
+            icon: "success",
+            title: "Contato Atualizado com sucesso!",
+          });
+          this.$router.push({ name: "ControleDeContatos" });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$swal({
+            icon: "error",
+            title: "Nao foi possivel atualizar o contato.",
+          });
+        });
+    },
+    salvarContato() {
+      this.modoCadastro ? this.cadastrarContato() : this.atualizaContato();
+    },
   },
 };
 </script>
