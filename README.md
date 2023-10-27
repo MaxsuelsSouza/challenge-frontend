@@ -11,13 +11,14 @@ Por meio deste repositório, estou entregando a aplicação `front-end`, um sist
 
 ## Funcionalidades
 
+- Atenticaçao para acessar contatos
 - Validações nos campos
 - Tratamento de erro
 - Ver detalhes do contato
 - Criar contatos
-- Buscar todos os usuário
-- Atualizar um usuário
-- Excluir um usuário
+- Buscar todos os contatos
+- Atualizar um contatos
+- Excluir um contatos
 
 
 ## 📥 download
