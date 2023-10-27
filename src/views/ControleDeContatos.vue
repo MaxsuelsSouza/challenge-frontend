@@ -16,6 +16,7 @@
             <th>Nome</th>
             <th>Numero</th>
             <th>Email</th>
+            <th></th>
           </tr>
           <tbody>
             <!-- aqui tricar por editar contato -->
@@ -50,8 +51,10 @@ export default {
   data() {
     return {
       contatos: [],
+      busca: "",
     };
   },
+
   methods: {
     adicionarContato() {
       this.$router.push({ name: "NovoContatos" });

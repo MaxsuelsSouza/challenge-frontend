@@ -71,14 +71,14 @@
         <hr />
       </div>
       <div class="col-sm-12">
-        <button @click="cancelarAcao" class="btn btn-default float-right">
-          cancelar
-        </button>
-        <button @click="salvarContato" class="btn btn-primary float-right mr-2">
+        <button @click="salvarContato" class="btn btn-primary float-right">
           salvar
         </button>
-        <button @click="excluirContato" class="btn btn-primary mr-2">
-          excluir Contato
+        <button @click="cancelarAcao" class="btn btn-default float-right mr-2">
+          cancelar
+        </button>
+        <button @click="excluirContato" class="btn btn-danger mt-3 mr-2">
+          excluir
         </button>
       </div>
     </di>
@@ -174,26 +174,36 @@ export default {
           });
         });
     },
-    // excluirContato(contatos) {
-    //   if (
-    //     confirm(`Deseja excluir o produto "${contatos.id} - ${contatos.nome}"`)
-    //   ) {
-    //     contatosService
-    //       .deletar(contatos.id)
-    //       .then(() => {
-    //         let indice = this.contatos.findIndex((c) => c.id == contatos.id);
-
-    //         this.contatos.splice(indice, 1);
-    //         this.$router.push({ name: "ControleDeContatos" });
-    //         setTimeout(() => {
-    //           alert("contato excluido com sucesso");
-    //         }, 500);
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-    //   }
-    // },
+    excluirContato() {
+      this.$swal
+        .fire({
+          title: `Deseja deletar o contato de ${this.contatos.nome}`,
+          showCancelButton: true,
+          cancelButtonText: "Não",
+          confirmButtonText: "Sim",
+        })
+        .then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            {
+              contatosService
+                .deletar(this.contatos.id)
+                .then(() => {
+                  this.$router.push({ name: "ControleDeContatos" });
+                  setTimeout(() => {
+                    this.$swal({
+                      icon: "success",
+                      title: "Contato excluido com sucesso",
+                    });
+                  }, 500);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          }
+        });
+    },
     salvarContato() {
       this.modoCadastro ? this.cadastrarContato() : this.atualizaContato();
     },

@@ -23,15 +23,6 @@ const routes = [
         }
     },
     {
-        path: '/menu', 
-        name: 'MenuContatos',
-        component: MenuContatos,
-        title: 'menu',
-        meta: {
-            requireAuth: true
-        }
-    },
-    {
         path: '/contatos/novo', 
         name: 'NovoContatos',
         component: AdicionarContato,

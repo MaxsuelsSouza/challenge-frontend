@@ -4,14 +4,27 @@
       <a @click="() => this.$router.push({ path: '/' })">Contatos</a>
     </li>
     <li>
-      <a @click="() => this.$router.push({ path: '/menu' })">Menu</a>
-    </li>
-    <li>
-      <a @click="() => this.$router.push({ path: '/Login' })">Sair</a>
+      <a @click="sair">Sair</a>
     </li>
   </ul>
 </template>
 <script>
+export default {
+  methods: {
+    sair() {
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+        this.$router.push({ path: "/Login" });
+        this.$swal({
+          icon: "success",
+          title: `Usuario deslogado com sucesso!`,
+        });
+      } else {
+        this.$router.push({ path: "/Login" });
+      }
+    },
+  },
+};
 </script>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&family=Noto+Serif:ital,wght@0,300;0,500;1,300;1,400&display=swap");

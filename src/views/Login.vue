@@ -2,17 +2,22 @@
   <div class="box-login">
     <div class="logo">
       <h1>Agenda Blue</h1>
-      {{ usuario.email }}
     </div>
 
     <div class="colotext">
       <BtnInput
         label="Email"
         placeHolder="exemplo@gmail.com"
-        v-model="usuario.email"
+        :value="usuario.email"
+        @alteracao="populaEmail($event)"
       ></BtnInput>
 
-      <BtnInput label="Senha" placeHolder="123456" type="password"></BtnInput>
+      <BtnInput
+        label="Senha"
+        placeHolder="123456"
+        type="password"
+        @alteracao="populaSenha($event)"
+      ></BtnInput>
 
       <input-buton value="Entrar" :callback="login"></input-buton>
     </div>
@@ -21,8 +26,8 @@
 <script>
 import BtnInput from "../components/input/MeuInput.vue";
 import InputButon from "../components/Botao/InputBotao.vue";
-
-// import usuarioService from "../service/usuario-service";
+import usuarioService from "../service/usuario-service";
+import Usuario from "../models/Usuario";
 export default {
   name: "TelaLogin",
   components: {
@@ -31,28 +36,41 @@ export default {
   },
   data() {
     return {
-      usuario: {
-        email: "",
-        senha: "",
-      },
-      // usuario: new Usuario(),
+      usuario: new Usuario(),
     };
   },
   methods: {
     login() {
-      // if (this.usuario.modeloValidoLogin()) {
-      //   alert("email obrigatorio");
-      //   return;
-      // }
-      // usuarioService
-      //   .login(this.usuario.email, this.usuario.senha)
-      //   .then((response) => {
-      //     console.log(response);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-      this.$router.push({ name: "ControleDeContatos" });
+      if (!this.usuario.modeloValidoLogin()) {
+        this.$swal({
+          icon: "warning",
+          title: "email obrigatorio e senha são obrigatórios",
+        });
+        return;
+      }
+
+      usuarioService
+        .login(this.usuario.email, this.usuario.senha)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          this.$swal({
+            icon: "success",
+            title: `Usuario: ${response.data.email}, logado com sucesso!`,
+          });
+          this.$router.push({ name: "ControleDeContatos" });
+        })
+        .catch((error) => {
+          this.$swal({
+            icon: "error",
+            title: ` ${error.data.mensageErro}`,
+          });
+        });
+    },
+    populaEmail(email) {
+      this.usuario.email = email;
+    },
+    populaSenha(senha) {
+      this.usuario.senha = senha;
     },
   },
 };
