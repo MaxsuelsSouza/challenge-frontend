@@ -77,13 +77,16 @@
         <button @click="salvarContato" class="btn btn-primary float-right mr-2">
           salvar
         </button>
+        <button @click="excluirContato" class="btn btn-primary mr-2">
+          excluir Contato
+        </button>
       </div>
     </di>
   </div>
 </template>
 <script>
 import Contatos from "../models/Contatos";
-import produtoService from "../service/contatos-services";
+import contatosService from "../service/contatos-services";
 export default {
   name: "Contato",
   data() {
@@ -101,7 +104,7 @@ export default {
   },
   methods: {
     obterContatoPorId(id) {
-      produtoService
+      contatosService
         .obterPorId(id)
         .then((response) => {
           this.contatos = new Contatos(response.data);
@@ -127,7 +130,7 @@ export default {
         });
         return;
       }
-      produtoService
+      contatosService
         .cadastrar(this.contatos)
         .then(() => {
           this.$swal({
@@ -154,7 +157,7 @@ export default {
         // alert("codigo e nome e obrigatorio para atualizaçao");
         return;
       }
-      produtoService
+      contatosService
         .atualizar(this.contatos)
         .then(() => {
           this.$swal({
@@ -171,6 +174,26 @@ export default {
           });
         });
     },
+    // excluirContato(contatos) {
+    //   if (
+    //     confirm(`Deseja excluir o produto "${contatos.id} - ${contatos.nome}"`)
+    //   ) {
+    //     contatosService
+    //       .deletar(contatos.id)
+    //       .then(() => {
+    //         let indice = this.contatos.findIndex((c) => c.id == contatos.id);
+
+    //         this.contatos.splice(indice, 1);
+    //         this.$router.push({ name: "ControleDeContatos" });
+    //         setTimeout(() => {
+    //           alert("contato excluido com sucesso");
+    //         }, 500);
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   }
+    // },
     salvarContato() {
       this.modoCadastro ? this.cadastrarContato() : this.atualizaContato();
     },

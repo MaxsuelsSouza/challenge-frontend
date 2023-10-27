@@ -2,10 +2,15 @@
   <div class="box-login">
     <div class="logo">
       <h1>Agenda Blue</h1>
+      {{ usuario.email }}
     </div>
 
     <div class="colotext">
-      <BtnInput label="Email" placeHolder="exemplo@gmail.com"></BtnInput>
+      <BtnInput
+        label="Email"
+        placeHolder="exemplo@gmail.com"
+        v-model="usuario.email"
+      ></BtnInput>
 
       <BtnInput label="Senha" placeHolder="123456" type="password"></BtnInput>
 
@@ -16,14 +21,37 @@
 <script>
 import BtnInput from "../components/input/MeuInput.vue";
 import InputButon from "../components/Botao/InputBotao.vue";
+
+// import usuarioService from "../service/usuario-service";
 export default {
   name: "TelaLogin",
   components: {
     BtnInput,
     InputButon,
   },
+  data() {
+    return {
+      usuario: {
+        email: "",
+        senha: "",
+      },
+      // usuario: new Usuario(),
+    };
+  },
   methods: {
     login() {
+      // if (this.usuario.modeloValidoLogin()) {
+      //   alert("email obrigatorio");
+      //   return;
+      // }
+      // usuarioService
+      //   .login(this.usuario.email, this.usuario.senha)
+      //   .then((response) => {
+      //     console.log(response);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
       this.$router.push({ name: "ControleDeContatos" });
     },
   },

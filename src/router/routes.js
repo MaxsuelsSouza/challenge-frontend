@@ -10,7 +10,7 @@ const routes = [
         component: Login,
         title: 'login',
         meta: {
-            requireAuth: false
+            requireAuth: true
         }
     },
     {
