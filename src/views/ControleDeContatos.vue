@@ -9,7 +9,7 @@
     <hr />
     <div class="row">
       <div class="col-sm-12">
-        <BtnInput placeHolder="Buscar"></BtnInput>
+       
         <table class="table table-hover">
           <tr>
             <th></th>
@@ -62,24 +62,6 @@ export default {
     editarContato(pessoa) {
       // aqui poder fazer uma validaçao se quer excluir ou editar
       this.$router.push({ name: "editarContatos", params: { id: pessoa.id } });
-    },
-    excluirContato(contato) {
-      if (
-        confirm(`Deseja excluir o produto "${contato.id} - ${contato.nome}"`)
-      ) {
-        ContatosService.deletar(contato.id)
-          .then(() => {
-            let indice = this.contatos.findIndex((c) => c.id == contato.id);
-
-            this.contatos.splice(indice, 1);
-            setTimeout(() => {
-              alert("contato excluido com sucesso");
-            }, 500);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
     },
 
     obterTodosOsContatos() {

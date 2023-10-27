@@ -18,7 +18,7 @@ COPY . .
 # compila a aplicação de produção com minificação
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 7079
 CMD [ "http-server", "dist" ]
 
 # comando para buildar: docker build -t agenda .

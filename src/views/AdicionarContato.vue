@@ -77,7 +77,12 @@
         <button @click="cancelarAcao" class="btn btn-default float-right mr-2">
           cancelar
         </button>
-        <button @click="excluirContato" class="btn btn-danger mt-3 mr-2">
+
+        <button
+          v-show="!modoCadastro"
+          @click="excluirContato"
+          class="btn btn-danger mt-3 mr-2"
+        >
           excluir
         </button>
       </div>
