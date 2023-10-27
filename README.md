@@ -4,7 +4,7 @@
 
  Estou participando do processo seletivo da Blue Technology e, para uma melhor organização, dividi o projeto em dois repositórios distintos. O código-fonte da aplicação do back-end pode ser acessado através do seguinte link: <a href="https://github.com/MaxsuelsSouza/BackEnd">aqui</a>.
 
-Por meio deste repositório, estou entregando a aplicação `front-end`, um sistema CRUD desenvolvido com `javascrpit`, utilizando o framework `vuejs` e o `primevue`. Espero que você aprecie o resultado
+Por meio deste repositório, estou entregando a aplicação `front-end`, um sistema CRUD desenvolvido com `javascrpit`, utilizando o framework `vuejs` e o `Bootstrap`. Espero que você aprecie o resultado
  
 
 
